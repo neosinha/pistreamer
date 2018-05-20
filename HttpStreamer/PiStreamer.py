@@ -13,7 +13,8 @@ import os
 import argparse
 import cherrypy as Streamer
 
-import cv2
+# from picamera import PiCamera
+from time import sleep
 
 
 class PiStreamer(object):
@@ -44,8 +45,7 @@ class PiStreamer(object):
         self.m3u8.append("#EXT-X-MEDIA-SEQUENCE:0")
         self.m3u8.append("#EXT-X-PLAYLIST-TYPE:VOD")
         
-        self.camera = cv2.VideoCapture(0)
-        
+        self.camera = PiCamera()
         self.videodir = os.path.join(self.staticdir, 'videos')
         
         
@@ -69,22 +69,17 @@ class PiStreamer(object):
         """
         print "Starting camera"
         self.tscount = 0
-        # fourcc = cv2.VideoWriter_fourcc(*'MPV4')
-        # ut = cv2.VideoWriter('output.avi', -1, 20.0, (640,480))
-        vfile = os.path.join(self.videodir, 'video-{}.mp4'.format(self.tscount))
-        self.vwriter = cv2.VideoWriter(vfile,-1, 20.0, (640,480))
-        while True: 
-            ret, self.frame = self.camera.read()
-            self.gframe = cv2.cvtColor(self.frame, cv2.COLOR_BGR2GRAY)
-            cv2.imshow("Face", self.frame)
-            
-            self.vwriter(self.frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-       
-        self.camera.release()
-        self.vwriter.release()
+        vfile = os.path.join(self.videodir, 'video.h264' )
+        self.camera.start_recording(vfile)
+        sleep(10)
+        self.camera.stop_recording()
         
+   
+    def postProcess(self):
+        """
+        Post process video
+        MP4Box -add video.h264 video.mp4
+        """
     
     def epoch(self):
         """
