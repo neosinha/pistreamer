@@ -69,17 +69,22 @@ class PiStreamer(object):
         """
         print "Starting camera"
         self.tscount = 0
-        vfile = os.path.join(self.videodir, 'video.h264' )
+        self.vfile = os.path.join(self.videodir, 'video.h264' )
         self.camera.start_recording(vfile)
         sleep(10)
         self.camera.stop_recording()
-        
+        self.postProcess()
    
     def postProcess(self):
         """
         Post process video
         MP4Box -add video.h264 video.mp4
         """
+        h624 = os.path.join(self.videodir, 'video{}.mp4'.format(self.tscount))
+        ps = subprocess.Popen(('MP4Box', '-add', self.vfile, ''), stdout=subprocess.PIPE)
+        output = subprocess.check_output(('grep', 'process_name'), stdin=ps.stdout)
+        ps.wait()
+        
     
     def epoch(self):
         """
