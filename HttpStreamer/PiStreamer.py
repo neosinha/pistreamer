@@ -15,7 +15,8 @@ import cherrypy as Streamer
 import subprocess
 
 from picamera import PiCamera
-import time 
+import time
+import datetime 
 from time import sleep
 
 
@@ -77,12 +78,22 @@ class PiStreamer(object):
         etime = stime + numsecs
         
         self.tscount = 0
-        while self.epoch() < etime : 
+        while self.epoch() < etime :
+            print("Video EL[{}], {}, {}, {}".format(self.tscount, 
+                                self.getts(), 
+                                stime, 
+                                etime))
             self.capVideo()
             self.postProcess()
             # change the tscount file
             self.tscount += 1
     
+    def getts(self):
+        """
+        Get formatted time-stamp
+        """
+        ts = datetime.datetime.now().strftime('%Y-%m-%d-%H-%M-%S')
+        return ts
     
     def capVideo(self):
         """
