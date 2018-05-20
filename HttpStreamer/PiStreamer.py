@@ -13,7 +13,7 @@ import os
 import argparse
 import cherrypy as Streamer
 
-# from picamera import PiCamera
+from picamera import PiCamera
 from time import sleep
 
 
