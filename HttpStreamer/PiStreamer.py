@@ -119,6 +119,9 @@ class PiStreamer(object):
         ps = subprocess.Popen(('MP4Box', '-add', self.vfile, h264), stdout=subprocess.PIPE)
         # output = subprocess.check_output(('grep', 'process_name'), stdin=ps.stdout)
         ps.wait()
+        # remove file
+        
+        os.remove(self.vfile)
         
     
     def epoch(self):
