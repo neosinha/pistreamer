@@ -70,7 +70,7 @@ class PiStreamer(object):
         print "Starting camera"
         self.tscount = 0
         self.vfile = os.path.join(self.videodir, 'video.h264' )
-        self.camera.start_recording(vfile)
+        self.camera.start_recording(self.vfile)
         sleep(10)
         self.camera.stop_recording()
         self.postProcess()
