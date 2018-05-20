@@ -32,7 +32,9 @@ class PiStreamer(object):
     videodir = None 
     
     seq=0
-    tscount = 0 
+    
+    tscount = 0 # video file sequence count
+    plcount = 0 # play list count
     
     def __init__(self, staticdir):
         '''
@@ -60,7 +62,25 @@ class PiStreamer(object):
             print("Creating directory for streaming video, {}".format(self.videodir))
             os.mkdir(self.videodir)
         
-        self.capVideo()
+        
+        # self.capVideo()
+        self.createPlayListVideo(numsecs=60)
+        
+    
+    def createPlayListVideo(self, numsecs=60):
+        """
+        Capture num seconds of video
+        + numsec: seconds
+        """
+        stime = self.epoch()
+        etime = stime + numsecs
+        
+        self.tscount = 0
+        while self.epoch() < etime : 
+            self.capVideo()
+            self.postProcess()
+            # change the tscount file
+            self.tscount += 1
     
     
     def capVideo(self):
@@ -69,12 +89,10 @@ class PiStreamer(object):
         
         """
         print "Starting camera"
-        self.tscount = 0
         self.vfile = os.path.join(self.videodir, 'video.h264' )
         self.camera.start_recording(self.vfile)
         sleep(10)
         self.camera.stop_recording()
-        self.postProcess()
    
     def postProcess(self):
         """
