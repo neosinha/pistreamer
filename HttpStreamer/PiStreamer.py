@@ -79,7 +79,7 @@ class PiStreamer(object):
         
         self.tscount = 0
         while self.epoch() < etime :
-            print("Video EL[{}], {}, {}, {}".format(self.tscount, 
+            print("Start Video EL[{}], {}, {}, {}".format(self.tscount, 
                                 self.getts(), 
                                 stime, 
                                 etime))
@@ -87,6 +87,10 @@ class PiStreamer(object):
             self.postProcess()
             # change the tscount file
             self.tscount += 1
+            print("Finish Video EL[{}], {}, {}, {}".format(self.tscount, 
+                                self.getts(), 
+                                stime, 
+                                etime))
     
     def getts(self):
         """
