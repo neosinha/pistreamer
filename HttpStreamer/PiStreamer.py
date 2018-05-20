@@ -81,7 +81,7 @@ class PiStreamer(object):
         Post process video
         MP4Box -add video.h264 video.mp4
         """
-        h624 = os.path.join(self.videodir, 'video{}.mp4'.format(self.tscount))
+        h264 = os.path.join(self.videodir, 'video{}.mp4'.format(self.tscount))
         ps = subprocess.Popen(('MP4Box', '-add', self.vfile, h264), stdout=subprocess.PIPE)
         # output = subprocess.check_output(('grep', 'process_name'), stdin=ps.stdout)
         ps.wait()
