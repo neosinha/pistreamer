@@ -54,7 +54,7 @@ class PiStreamer(object):
             print "Camera is ready.."
         
         
-        self.videodir = os.path.join(os.getcwd(), 'video')
+        # self.videodir = os.path.join(os.getcwd(), 'video')
         if os.path.exists(self.videodir):
             print("Creating directory for streaming video, {}".format(self.videodir))
             os.mkdir(self.videodir)
