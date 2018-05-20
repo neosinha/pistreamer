@@ -83,7 +83,7 @@ class PiStreamer(object):
         """
         h624 = os.path.join(self.videodir, 'video{}.mp4'.format(self.tscount))
         ps = subprocess.Popen(('MP4Box', '-add', self.vfile, ''), stdout=subprocess.PIPE)
-        output = subprocess.check_output(('grep', 'process_name'), stdin=ps.stdout)
+        # output = subprocess.check_output(('grep', 'process_name'), stdin=ps.stdout)
         ps.wait()
         
     
