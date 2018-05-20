@@ -55,7 +55,7 @@ class PiStreamer(object):
         
         
         # self.videodir = os.path.join(os.getcwd(), 'video')
-        if os.path.exists(self.videodir):
+        if not os.path.exists(self.videodir):
             print("Creating directory for streaming video, {}".format(self.videodir))
             os.mkdir(self.videodir)
         
