@@ -75,7 +75,7 @@ class PiStreamer(object):
         + numsec: seconds
         """
         stime = self.epoch()
-        etime = stime + numsecs
+        etime = stime + numsecs*1000
         
         self.tscount = 0
         while self.epoch() < etime :
@@ -105,7 +105,7 @@ class PiStreamer(object):
         
         """
         print "Starting camera"
-        self.vfile = os.path.join(self.videodir, 'video.h264' )
+        self.vfile = os.path.join(self.videodir, 'video{}.h264'.format(self.tscount) )
         self.camera.start_recording(self.vfile)
         sleep(10)
         self.camera.stop_recording()
